@@ -23,6 +23,13 @@ function wpshout_react_quiz_enqueue_scripts() {
 	wp_enqueue_script( 'style', plugin_dir_url( __FILE__ ) . 'src/style.js' );
 	wp_enqueue_script( 'quiz', plugin_dir_url( __FILE__ ) . 'src/index.js' );
 	wp_enqueue_script( 'axios', plugin_dir_url( __FILE__ ) . 'node_modules/axios/dist/axios.js' );
+	wp_enqueue_script( 'marked', plugin_dir_url( __FILE__ ) . 'node_modules/marked/marked.min.js' );
+	wp_enqueue_script( 'material-ui', plugin_dir_url( __FILE__ ) . 'node_modules/material-ui/RaisedButton/RaisedButton.js' );
+
+	// wp_enqueue_script( 'react-flexbox-grid', plugin_dir_url( __FILE__ ) . 'node_modules/react-flexbox-grid/lib/components/Grid.js' );
+	// wp_enqueue_script( 'react-flexbox-col', plugin_dir_url( __FILE__ ) . 'node_modules/react-flexbox-grid/lib/components/Col.js' );
+	// wp_enqueue_script( 'react-flexbox-row', plugin_dir_url( __FILE__ ) . 'node_modules/react-flexbox-grid/lib/components/Row.js' );
+
 
 	wp_enqueue_style( 'quiz', plugin_dir_url( __FILE__ ) . 'src/prayer.css' );
 }

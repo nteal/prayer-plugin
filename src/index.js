@@ -1,16 +1,3 @@
-// import ReactDOM from 'react-dom';
-// // import App from './App';
-// import IdeaBox from './ideaBox.js'
-// import registerServiceWorker from './registerServiceWorker';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-//
-// import './index.css';
-// injectTapEventPlugin();
-//
-// ReactDOM.render(<IdeaBox url='http://localhost:3001/api/ideas' ideaInterval={2000} />, document.getElementById('root'));
-// registerServiceWorker();
-
-
 class IdeaBox extends React.Component {
  constructor(props) {
  super(props);
@@ -67,12 +54,11 @@ componentDidMount() {
  render() {
     return (
      <div style={ style.ideaBox }>
-     <h2 style={ style.title }>Love is ____</h2>
+     <h2 style={ style.title }>Make a Prayer Request</h2>
      <nav>
          <ul>
-            <a> Home</a>
-            <a> About</a>
-            <a> Projects </a>
+            <span> Please make a prayer request below.</span>
+
          </ul>
       </nav>
 
@@ -94,18 +80,17 @@ class IdeaList extends React.Component {
  let IdeaNodes = this.props.data.map((idea, i) => {
     return (
         <div style={style.root}>
-          <Card>
+
               <Idea
-                content={ idea.content }
+                name={ idea.name }
                 uniqueID={idea['_id']}
                 onIdeaDelete={ this.props.onIdeaDelete }
                 onIdeaUpdate={ this.props.onIdeaUpdate }
                 key={idea['_id']}
                 >
-               Love is ...{ idea.content }
-               by{ idea.name}
+               { idea.content }
               </Idea>
-          </Card>
+
         </div>
             )
     })
@@ -144,6 +129,7 @@ class IdeaForm extends React.Component {
  render() {
  return (
 <form style={ style.ideaForm } onSubmit={ this.handleSubmit }>
+
  <input
  id="adfs"
  type='content'
@@ -165,117 +151,89 @@ class IdeaForm extends React.Component {
  )
  }
 }
-/* JSON data */
-// var myData = [
-//   { questionText: "Is introducing React.js into a WordPress environment difficult?", answers: [ "Yes", "No", "Not necessarily" ] },
-//   { questionText: "Do you want to learn how?", answers: [ "Sure!", "Well, okay", "Goodbye" ] }
-// ];
-//
-// var answerData = [];
-//
-// /* React.js Classes */
-//
-// var Quiz = React.createClass({
-//   // The Quiz needs state: The sum total of the selected answers from all the QuizQuestions
-//   getInitialState: function() {
-//     var quizData = myData;
-//     var resultData = {};
-//     return {
-//       quizData: myData,
-//       resultData: answerData
-//      };
-//   },
-//
-//   handleChildChange: function(childIndex, childValue) {
-//     answerData[childIndex] = {
-//       index: childIndex,
-//       answerSelected: childValue
-//     };
-//     this.setState( { resultData: answerData } );
-//   },
-//
-//   render: function() {
-//     var quizQuestions = this.state.quizData.map( function( thisQuizQuestion, thisQuestionNumber ) {
-//
-//       return (
-//         <QuizQuestion questionNumber={thisQuestionNumber} question={thisQuizQuestion.questionText} answers={thisQuizQuestion.answers} handleChange={this.handleChildChange} />
-//       );
-//     }, this );
-//
-//     var quizResults = this.state.resultData.map( function( thisResult, thisResultNumber ) {
-//       return (
-//         <div>
-//             <QuizResult number={thisResultNumber + 1} result={thisResult.answerSelected} />
-//         </div>
-//       );
-//     } );
-//
-//     return (
-//       <div class="quiz">
-//           <h2>Questions</h2>
-//           {quizQuestions}
-//           <p><hr /></p>
-//           <h2>Results</h2>
-//           { quizResults }
-//       </div>
-//     );
-//   }
-// });
-//
-//
-// var QuizQuestion = React.createClass({
-//   // Each QuizQuestion needs state: Which answer is selected
-//
-//   getInitialState: function() {
-//     return { selectedOption: '' };
-//   },
-//
-//   handleChange: function( changeEvent ) {
-//     // Set which is checked
-//     this.setState({
-//       selectedOption: changeEvent.target.value
-//     });
-//
-//     // Pass that information back to the quiz
-//     this.props.handleChange(changeEvent.target.name, changeEvent.target.value);
-//   },
-//
-//   render: function() {
-//     var quizAnswers = this.props.answers.map( function( thisQuizAnswer, index ) {
-//
-//       return (
-//         <span>
-//           <input type="radio" name={ this.props.questionNumber } value={thisQuizAnswer}  onChange={ this.handleChange } checked={ this.state.selectedOption === thisQuizAnswer } ></input>
-//           {thisQuizAnswer}
-//           <br />
-//         </span>
-//       );
-//     }.bind(this) );
-//
-//     return (
-//       <div class="question">
-//         <h3>{this.props.question}</h3>
-//         <fieldset>
-//           {quizAnswers}
-//         </fieldset>
-//       </div>
-//     );
-//   }
-// });
-//
-//
-// var QuizResult = React.createClass({
-//   render: function() {
-//     return (
-//       <div class="results">
-//           <h3>Question {this.props.number}</h3>
-//           You answered <em>{this.props.result}</em>.
-//       </div>
-//     );
-//   }
-// });
 
+class Idea extends React.Component {
+ constructor(props) {
+ super(props);
+     this.state= {
+       toBeUpdated: false,
+       name: '',
+       content: ''
+   };
+ //binding all our functions to this class
+ this.deleteIdea = this.deleteIdea.bind(this);
+ this.updateIdea = this.updateIdea.bind(this);
+ this.handleNameChange = this.handleNameChange.bind(this);
+ this.handleContentChange = this.handleContentChange.bind(this);
+ this.handleIdeaUpdate = this.handleIdeaUpdate.bind(this);
+ }
+ updateIdea(e) {
+    e.preventDefault();
+    //brings up the update field when we click on the update link.
+    this.setState({ toBeUpdated: !this.state.toBeUpdated });
+ }
+ handleIdeaUpdate(e) {
+    e.preventDefault();
+    let id = this.props.uniqueID;
+    //if name or content changed, set it. if not, leave null and our PUT
+    //request will ignore it.
+    let name = (this.state.name) ? this.state.name : null;
+    let content = (this.state.content) ? this.state.content : null;
+    let idea = { name: name, content: content};
+    this.props.onIdeaUpdate(id, idea);
+    this.setState({
+       toBeUpdated: !this.state.toBeUpdated,
+       name: '',
+       content: ''
+    })
+ }
+ deleteIdea(e) {
+    e.preventDefault();
+    let id = this.props.uniqueID;
+    this.props.onIdeaDelete(id);
+    console.log('oops deleted', id);
+ }
+ handleContentChange(e) {
+    this.setState({ content: e.target.value });
+ }
+ handleNameChange(e) {
+    this.setState({ name: e.target.value });
+ }
+ rawMarkup() {
+    let rawMarkup = marked(this.props.children.toString());
+    return { __html: rawMarkup };
+ }
+ render() {
+    return (
 
-// ReactDOM.render(<IdeaBox url='http://localhost:3001/api/ideas' ideaInterval={2000} />, document.getElementById('root'));
+       <div style={ style.idea }>
+           <h3>{this.props.name}</h3>
+                       <span dangerouslySetInnerHTML={ this.rawMarkup() } />
+                       <button style={ style.updateLink } href='#' onClick={ this.updateIdea } label="update"/>
+                       <button style={ style.deleteLink } href='#' onClick={ this.deleteIdea } label="delete"/>
+                       { (this.state.toBeUpdated)
+                       ? (<form onSubmit={ this.handleIdeaUpdate }>
+                       <input
+                       type='content'
+                       placeholder='Update name…'
+                       style={ style.ideaFormName }
+                       value={ this.state.name }
+                       onChange= { this.handleNameChange } />
+                       <input
+                       type='content'
+                       placeholder='Update your idea…'
+                       style= { style.ideaFormContent }
+                       value={ this.state.content }
+                       onChange={ this.handleContentChange } />
+                       <input
+                       type='submit'
+                       style={ style.ideaFormPost }
+                       value='Update' />
+                       </form>)
+                       : null}
 
+       </div>
+    )
+    }
+}
 ReactDOM.render(<IdeaBox url='http://localhost:3001/api/ideas' ideaInterval={2000}/>, document.getElementById('quiz'));
