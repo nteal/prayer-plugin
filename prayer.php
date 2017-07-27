@@ -32,6 +32,8 @@ function wpshout_react_quiz_enqueue_scripts() {
 
 
 	wp_enqueue_style( 'quiz', plugin_dir_url( __FILE__ ) . 'src/prayer.css' );
+	wp_enqueue_style( 'quiz', plugin_dir_url( __FILE__ ) . 'src/index.css' );
+	wp_enqueue_style( 'quiz', plugin_dir_url( __FILE__ ) . 'src/App.css' );
 }
 
 // Add "babel" type to quiz script

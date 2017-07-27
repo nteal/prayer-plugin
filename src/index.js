@@ -57,16 +57,16 @@ componentDidMount() {
      <h2 style={ style.title }>Make a Prayer Request</h2>
      <nav>
          <ul>
-            <span> Please make a prayer request below.</span>
+            <span style={style.subtitle}> Please make a prayer request below.</span>
 
          </ul>
       </nav>
+         <IdeaForm onIdeaSubmit={ this.handleIdeaSubmit }/>
 
         <IdeaList
           onIdeaDelete={ this.handleIdeaDelete }
           onIdeaUpdate={ this.handleIdeaUpdate }
           data={ this.state.data }/>
-          <IdeaForm onIdeaSubmit={ this.handleIdeaSubmit }/>
 
 
      </div>
@@ -82,6 +82,7 @@ class IdeaList extends React.Component {
         <div style={style.root}>
 
               <Idea
+                style={style.idea}
                 name={ idea.name }
                 uniqueID={idea['_id']}
                 onIdeaDelete={ this.props.onIdeaDelete }
@@ -209,8 +210,8 @@ class Idea extends React.Component {
        <div style={ style.idea }>
            <h3>{this.props.name}</h3>
                        <span dangerouslySetInnerHTML={ this.rawMarkup() } />
-                       <button style={ style.updateLink } href='#' onClick={ this.updateIdea } label="update"/>
-                       <button style={ style.deleteLink } href='#' onClick={ this.deleteIdea } label="delete"/>
+                       <a style={ style.updateLink } href='#' onClick={ this.updateIdea } label="update">update</a>
+                       <a style={ style.deleteLink } href='#' onClick={ this.deleteIdea } label="delete">delete</a>
                        { (this.state.toBeUpdated)
                        ? (<form onSubmit={ this.handleIdeaUpdate }>
                        <input

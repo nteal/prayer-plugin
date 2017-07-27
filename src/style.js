@@ -18,7 +18,8 @@ gridList: {
  fontFamily:'Helvetica, sans-serif'
  },
  title: {
- textAlign:'center',
+ // textAlign:'center',
+ fontFamily:'Helvetica, sans-serif',
  textTransform:'uppercase',
  },
  ideaList: {
@@ -33,6 +34,11 @@ gridList: {
  margin:'10px',
  padding:'3px 10px',
  // fontSize:'.85rem'
+ 'border-radius': '25px',
+ border: '2px solid black',
+ padding: '30px',
+ width: '450px',
+ height: '150px',
  },
  ideaForm: {
  margin:'10px',
@@ -79,6 +85,9 @@ gridList: {
  paddingRight:'15px',
  fontSize:'.7rem',
  color:'red'
+ },
+ subtitle: {
+   fontFamily:'Helvetica, sans-serif'
  }
 }
 module.exports = style;
