@@ -106,50 +106,62 @@ class IdeaList extends React.Component {
 class IdeaForm extends React.Component {
  constructor(props) {
  super(props);
- this.state = { name: '', content: '' };
- this.handleNameChange = this.handleNameChange.bind(this);
- this.handleContentChange = this.handleContentChange.bind(this);
- this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { name: '', content: '' };
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleContentChange = this.handleContentChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
  }
  handleNameChange(e) {
- this.setState({ name: e.target.value });
+    this.setState({ name: e.target.value });
  }
  handleContentChange(e) {
- this.setState({ content: e.target.value });
+    this.setState({ content: e.target.value });
  }
  handleSubmit(e) {
- e.preventDefault();
- let name = this.state.name.trim();
- let content = this.state.content.trim();
- if (!content || !name) {
- return;
- }
- this.props.onIdeaSubmit({ name: name, content: content });
- this.setState({ name: '', content: '' });
+    e.preventDefault();
+    let name = this.state.name.trim();
+    let content = this.state.content.trim();
+    if (!content || !name) {
+       return;
+    }
+    this.props.onIdeaSubmit({ name: name, content: content });
+    this.setState({ name: '', content: '' });
  }
  render() {
- return (
-<form style={ style.ideaForm } onSubmit={ this.handleSubmit }>
+    return (
+   <div id="submit-prayer-form" style={style.submitFormDiv}>
+   <form style={ style.ideaForm } onSubmit={ this.handleSubmit }>
+You may add your prayer request to our prayer wall using the form below. Once your prayer request is received, we will share it according to your instructions. Feel free to submit as many prayer requests as you like!
+    <input
+    id="name"
+    type='content'
+    placeholder='Your name'
+    style={ style.ideaFormName}
+    value={ this.state.name }
+    onChange={ this.handleNameChange } />
+    <input placeholder="Your Email"/>
+    <input placeholder="Your Phone"/>
+    <select>
+        <option value="">Share this</option>
+        <option value="">Share this anonymously</option>
+        <option value="">Do NOT share this</option>
+   </select>
+   <input type="checkbox"/>
+   <label for="">Email me when someone prays</label>
 
- <input
- id="adfs"
- type='content'
- placeholder='Your name…'
- style={ style.ideaFormName}
- value={ this.state.name }
- onChange={ this.handleNameChange } />
- <input
- id="dasflakj"
- type='content'
- placeholder='Say something…'
- style={ style.ideaFormContent}
- value={ this.state.content }
- onChange={ this.handleContentChange } />
- <input type='submit'
- style={ style.ideaFormPost }
- label="Post"/>
- </form>
- )
+    <input
+    id="content"
+    type='content'
+    placeholder='Prayer Request'
+    style={ style.ideaFormContent}
+    value={ this.state.content }
+    onChange={ this.handleContentChange } />
+    <input type='submit'
+    style={ style.ideaFormPost }
+    label="Post"/>
+    </form>
+    </div>
+    )
  }
 }
 

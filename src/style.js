@@ -63,7 +63,7 @@ gridList: {
  borderRadius:'3px'
  },
  ideaFormPost: {
- minWidth:'75px',
+ minWidth:'100px',
  flex:'1',
  height:'40px',
  margin:'5px 3px',
@@ -88,6 +88,9 @@ gridList: {
  },
  subtitle: {
    fontFamily:'Helvetica, sans-serif'
+ },
+ submitFormDiv: {
+   width: '300px'
  }
 }
 module.exports = style;
